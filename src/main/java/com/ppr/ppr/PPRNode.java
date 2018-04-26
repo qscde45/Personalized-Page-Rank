@@ -16,15 +16,24 @@ public class PPRNode implements Comparable<PPRNode> {
         this.id = id;
     }
 
+
+    public String getUrl() {
+        return url;
+    }
+
+    private String url;
     private String id;
     private String category;
     private double rank;
 
-    public PPRNode(String id, String category, double rank) {
+    public PPRNode(String id, String category, String url, double rank) {
         this.id = id;
         this.category = category;
         this.rank = rank;
+        this.url = url;
     }
+
+
 
     @Override
     public int compareTo(PPRNode another){

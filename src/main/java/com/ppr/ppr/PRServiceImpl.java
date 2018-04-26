@@ -55,10 +55,11 @@ public class PRServiceImpl implements PRService{
                 if (s.length < 2)
                     System.out.println(Arrays.toString(s));
                 String id = s[0];
+                String url = s[1];
 
                 String[] urls = s[1].split("/");
                 String category = urls.length >= 4 ? urls[3] : "";
-                allNodes.put(id, new PPRNode(id, category, 1.0 / N));
+                allNodes.put(id, new PPRNode(id, category, url, 1.0 / N));
 
                 if (category.equals(desiredCategory))
                     categories.add(id);
@@ -99,8 +100,9 @@ public class PRServiceImpl implements PRService{
         for (Map.Entry<String, PPRNode> entry : original.entrySet()) {
             String s = entry.getKey();
             String category = entry.getValue().getCategory();
+            String url = entry.getValue().getUrl();
             double rank = entry.getValue().getRank();
-            newMap.put(s, new PPRNode(s, category, rank));
+            newMap.put(s, new PPRNode(s, category, url, rank));
         }
         return newMap;
     }
@@ -135,7 +137,7 @@ public class PRServiceImpl implements PRService{
                 sumSink = sumSink * lambda / N;
                 double newRank = hopToDesired + sumIn + sumSink;
 
-                tmp.put(curr, new PPRNode(curr, allNodes.get(curr).getCategory(), newRank));
+                tmp.put(curr, new PPRNode(curr, allNodes.get(curr).getCategory(), allNodes.get(curr).getUrl(), newRank));
 
                 if (Math.abs(newRank - oldRank) > 0.00001)
                     converge = false;
@@ -184,8 +186,9 @@ public class PRServiceImpl implements PRService{
         for (int i = 1; i <= num; i++) {
             int size = list.size();
             PPRNode node = list.get(size - i);
-            res.add(i + "th node: " + node.getId() + ". Category: " + node.getCategory() + " .Rank: "
-                    + node.getRank());
+            res.add(i + "th node: " + node.getId() + "  Category: " + node.getCategory() +
+                    "  URL: "+ node.getUrl() + "  Rank: "
+                    + String.format("%.7f", node.getRank()));
         }
         return res;
     }

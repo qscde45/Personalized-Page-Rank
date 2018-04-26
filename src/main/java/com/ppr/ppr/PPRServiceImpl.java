@@ -55,10 +55,11 @@ public class PPRServiceImpl implements PPRService{
                 if (s.length < 2)
                     System.out.println(Arrays.toString(s));
                 String id = s[0];
+                String url = s[1];
 
                 String[] urls = s[1].split("/");
                 String category = urls.length >= 4 ? urls[3] : "";
-                allNodes.put(id, new PPRNode(id, category, 1.0 / N));
+                allNodes.put(id, new PPRNode(id, category, url, 1.0 / N));
 
                 if (category.equals(desiredCategory))
                     categories.add(id);
@@ -99,8 +100,9 @@ public class PPRServiceImpl implements PPRService{
         for (Map.Entry<String, PPRNode> entry : original.entrySet()) {
             String s = entry.getKey();
             String category = entry.getValue().getCategory();
+            String url = entry.getValue().getUrl();
             double rank = entry.getValue().getRank();
-            newMap.put(s, new PPRNode(s, category, rank));
+            newMap.put(s, new PPRNode(s, category, url, rank));
         }
         return newMap;
     }
@@ -135,7 +137,7 @@ public class PPRServiceImpl implements PPRService{
                 sumSink = sumSink * lambda / N;
                 double newRank = hopToDesired + sumIn + sumSink;
 
-                tmp.put(curr, new PPRNode(curr, allNodes.get(curr).getCategory(), newRank));
+                tmp.put(curr, new PPRNode(curr, allNodes.get(curr).getCategory(), allNodes.get(curr).getUrl(), newRank));
 
                 if (Math.abs(newRank - oldRank) > 0.00001)
                     converge = false;
@@ -184,8 +186,9 @@ public class PPRServiceImpl implements PPRService{
         for (int i = 1; i <= num; i++) {
             int size = list.size();
             PPRNode node = list.get(size - i);
-            res.add(i + "th node: " + node.getId() + ". Category: " + node.getCategory() + " .Rank: "
-                    + node.getRank());
+            res.add(i + "th node: " + node.getId() + "  Category: " + node.getCategory() +
+                    "  URL: "+ node.getUrl() + "  Rank: "
+                    + String.format("%.7f", node.getRank()));
         }
         return res;
     }
@@ -198,10 +201,12 @@ public class PPRServiceImpl implements PPRService{
     public List<String> showDiff(PRService pr, String category) {
         List<String> list = new ArrayList<>();
         //StringBuilder sb = new StringBuilder();
-        list.add("\nThe nodes in category: " + category + "\n");
+        list.add("The nodes in category: " + category);
         for (String s : categories) {
-            list.add("Page ID: " + s + "Page Category: " + allNodes.get(s).getCategory() + ". Its rank after PPR is " + allNodes.get(s).getRank() +
-                    ". Its rank after regular PR is " + pr.getAllNodes().get(s).getRank());
+            list.add("Page ID: " + s + "  Page Category: " + allNodes.get(s).getCategory() +
+                    "  Page URL:" + allNodes.get(s).getUrl());
+            list.add("Rank after PPR is " + String.format("%.7f", allNodes.get(s).getRank()) +
+                    "  Rank after PR is " + String.format("%.7f", pr.getAllNodes().get(s).getRank()));
         }
         return list;
     }
