@@ -179,10 +179,12 @@ public class PRServiceImpl implements PRService{
 //        }
 
         List<PPRNode> list = new ArrayList<>();
+
         for (Map.Entry<String, PPRNode> entry : allNodes.entrySet())
             list.add(entry.getValue());
         Collections.sort(list);
         List<String> res = new ArrayList<>();
+        res.add("Top " + num + " ranked pages after Regular PR");
         for (int i = 1; i <= num; i++) {
             int size = list.size();
             PPRNode node = list.get(size - i);

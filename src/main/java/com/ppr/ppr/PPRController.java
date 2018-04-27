@@ -2,12 +2,8 @@ package com.ppr.ppr;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,7 +24,7 @@ public class PPRController {
 
     @RequestMapping("/home")
     public String getHomePage(){
-        return "anotherhome";
+        return "homepage";
     }
 
 //    @GetMapping("/ppr")
@@ -51,14 +47,21 @@ public class PPRController {
         return pprService.showDiff(prService, category);
     }
 
-    @GetMapping("/pprtop")
-    public @ResponseBody List<String> pprtop(@RequestParam("num") int num){
-        return pprService.showTopRank(num);
-    }
+//    @GetMapping("/pprtop")
+//    public @ResponseBody List<String> pprtop(@RequestParam("num") int num){
+//        return pprService.showTopRank(num);
+//    }
+//
+//    @GetMapping("/prtop")
+//    public @ResponseBody List<String> prtop(@RequestParam("num") int num){
+//        return prService.showTopRank(num);
+//    }
 
-    @GetMapping("/prtop")
-    public @ResponseBody List<String> prtop(@RequestParam("num") int num){
-        return prService.showTopRank(num);
+    @PostMapping("/topK")
+    public @ResponseBody List<String> pprtop(@RequestParam("k") int k, @RequestParam("algorithm") String algorithm){
+        if (algorithm.equals("ppr"))
+            return pprService.showTopRank(k);
+        else
+            return prService.showTopRank(k);
     }
-
 }

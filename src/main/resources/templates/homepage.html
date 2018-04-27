@@ -1,8 +1,117 @@
 <!DOCTYPE html>
 <html>
-<button>
 
-<a href="http://localhost:8080/demo/list">show a list</a>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
 
-</button>
+
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            /*float:left;*/
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Welcome to our Personalized PageRank Program</h1>
+
+
+<div style="width:600px; float:left;" class="dropdown">
+    <h3>1. Compare the result between PPR and PR algorithm</h3>
+    <button class="dropbtn">Select Category</button>
+    <div  class="dropdown-content">
+        <a href="http://localhost:8080/demo/diff?category=faculty">faculty</a>
+        <a href="http://localhost:8080/demo/diff?category=docs">docs</a>
+        <a href="http://localhost:8080/demo/diff?category=academics">academics</a>
+        <a href="http://localhost:8080/demo/diff?pcategory=undergrad">undergrad</a>
+        <a href="http://localhost:8080/demo/diff?category=registrar">registrar</a>
+    </div>
+</div>
+
+
+<div style="width:400px; float:left;" class="dropdown">
+    <h3>2. Calculate top K pages with highest rank</h3>
+
+    <!--<form method="post">-->
+        <!--<label for="number">年龄:</label>-->
+        <!--<input id="number" name="number" type="number" min="18" max="99">-->
+        <!--<button> 提交 </button>-->
+        <!---->
+    <!--</form>-->
+
+    <form method='post' action="/demo/topK" >
+
+        <p>Please Input K: <input type="number" name='k' style="width:150px;height:30px" placeholder="1 <= k <= 6012" min="1" max="6012" /></p>
+        <p>Please select algorithm</p>
+        <!--<select type="text" name="algorithm">-->
+            <!--<option value="ppr">Personalized PR</option>-->
+            <!--<option value="pr">Regular PR</option>-->
+        <!--</select>-->
+
+        <input type="radio" name="algorithm" value="ppr" checked>Personalized PR
+        <br>
+        <input type="radio" name="algorithm" value="pr">Regular PR
+        <p><input type="submit" class="dropbtn"></p>
+    </form>
+
+    <!--<button class="dropbtn">Select Algorithm</button>-->
+    <!--<div class="dropdown-content">-->
+        <!--<a href="http://localhost:8080/demo/pprtop?num=10">PPR</a>-->
+        <!--<a href="http://localhost:8080/demo/prtop?num=10">PR</a>-->
+    <!--</div>-->
+</div>
+
+</body>
+
+
+<!--<body>-->
+<!--<h3>2. Calculate top 10 pages with highest rank</h3>-->
+<!--<div class="dropdown">-->
+    <!--<button class="dropbtn">Select Algorithm</button>-->
+    <!--<div style="width:400px; float:right;" class="dropdown-content">-->
+        <!--<a href="http://localhost:8080/demo/pprtop?num=10">PPR</a>-->
+        <!--<a href="http://localhost:8080/demo/prtop?num=10">PR</a>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</body>-->
+
 </html>

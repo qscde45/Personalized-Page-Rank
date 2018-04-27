@@ -183,6 +183,7 @@ public class PPRServiceImpl implements PPRService{
             list.add(entry.getValue());
         Collections.sort(list);
         List<String> res = new ArrayList<>();
+        res.add("Top " + num + " ranked pages after Personalized PR");
         for (int i = 1; i <= num; i++) {
             int size = list.size();
             PPRNode node = list.get(size - i);
